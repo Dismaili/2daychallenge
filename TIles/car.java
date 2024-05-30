@@ -2,7 +2,8 @@ import java.awt.Color;
 
 public class car {
     private Color colour;
-    private int position;
+    private int row;
+    private int col;
     private String name;
     private int turnsUntilPlay;
     private int fuel;
@@ -13,7 +14,8 @@ public class car {
     this.name = name;//name of the car either blue or red
     this.symbol = symbol;//symbol for the gui
     this.fuel = 120;//how much fuel is in the car at the begining of the match
-    this.position = 0;//the starting position of cars
+    this.row = 0;//the starting row of cars
+    this.col = 0://the starting column of cars
     this.colour = colour;// colours of the cars either red or blue
     this.turnsUntilPlay = 0;// how many turns does the play choose to lose for him to gain the extra gas, this only occurs if the player has 0 fuel and needs to choose to lose rools from 1 to 6, each roll the player skips is worth 20 fuel.in total a max of 120 6 rolls.
   }   
@@ -34,8 +36,11 @@ public String getName(){
     return name;
 }
 
-public int getPosition() {
-    return position;
+public int getCol() {
+    return col;
+}
+    public int getRow() {
+    return row;
 }
 public int getTurnsUntilPlay() {
     return turnsUntilPlay;
@@ -46,8 +51,11 @@ public void setFuel(int fuel) {
     public void setName(String name){
     this.name = name;
 }
-public void setPosition(int position) {
-    this.position = position;
+    public void setRow(int row) {
+    this.row = row;
+}
+public void setCol(int col) {
+    this.col = col;
 }
 public void setTurnsUntilPlay(int turnsUntilPlay) {
     this.turnsUntilPlay = turnsUntilPlay;
