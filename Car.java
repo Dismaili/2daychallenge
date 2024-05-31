@@ -37,6 +37,32 @@ public class Car {
         return fuel;
     }
 
+    public boolean hasFuel(){
+        return fuel > 0;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public boolean isFrozen(){
+        return freezeCounter > 0;
+    }
+
+    public void setFreeze(int freezeCounter){
+        this.freezeCounter = freezeCounter;
+    }
+
+    public void decrementFreeze(){
+        if(freezeCounter > 0){
+            freezeCounter--;
+        }
+    }
+
     public void setFuel(int fuel) {
         if(fuel < 0){
             this.fuel = 0;
@@ -55,6 +81,8 @@ public class Car {
 
     public void updatePosition(int gridSize) {
         boolean goLeft = (this.position[0] == 0) || (this.position[0] % 2 != 0);
+        System.out.println("goLeft: " + goLeft);
+        System.out.println("Position: " + this.position[0] + ", " + this.position[1]);
         if (goLeft) {
             moveLeft(gridSize);
         } else {
@@ -63,6 +91,7 @@ public class Car {
     }
 
     private void moveLeft(int gridSize) {
+
         if (this.position[1] > 0) {
             this.position[1]--;
         } else if (this.position[0] > 0) {

@@ -122,9 +122,9 @@ public class GameGUI extends JFrame {
         // Update positions of red and blue cars
         if (redPos[0] >= 0 && redPos[0] < gridSize && redPos[1] >= 0 && redPos[1] < gridSize) {
             if (gridLabels[redPos[0]][redPos[1]].getText().isEmpty()) {
-                gridLabels[redPos[0]][redPos[1]].setText("R");
+                gridLabels[redPos[0]][redPos[1]].setText(game.getRedCar().getSymbol());
             } else {
-                gridLabels[redPos[0]][redPos[1]].setText(gridLabels[redPos[0]][redPos[1]].getText() + "R");
+                gridLabels[redPos[0]][redPos[1]].setText(gridLabels[redPos[0]][redPos[1]].getText() + game.getRedCar().getSymbol());
             }
         } else {
             System.out.println("Error: Red car position out of bounds!");
@@ -132,9 +132,9 @@ public class GameGUI extends JFrame {
 
         if (bluePos[0] >= 0 && bluePos[0] < gridSize && bluePos[1] >= 0 && bluePos[1] < gridSize) {
             if (gridLabels[bluePos[0]][bluePos[1]].getText().isEmpty()) {
-                gridLabels[bluePos[0]][bluePos[1]].setText("B");
+                gridLabels[bluePos[0]][bluePos[1]].setText(game.getBlueCar().getSymbol());
             } else {
-                gridLabels[bluePos[0]][bluePos[1]].setText(gridLabels[bluePos[0]][bluePos[1]].getText() + "B");
+                gridLabels[bluePos[0]][bluePos[1]].setText(gridLabels[bluePos[0]][bluePos[1]].getText() + game.getBlueCar().getSymbol());
             }
         } else {
             System.out.println("Error: Blue car position out of bounds!");
@@ -147,7 +147,7 @@ public class GameGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Car currentCar = isRedTurn ? game.getRedCar() : game.getBlueCar();
-            game.playTurn(currentCar);  // Update this line to reflect your game's turn logic
+            game.playTurn();  // Update this line to reflect your game's turn logic
             updateGameLog((isRedTurn ? "Red" : "Blue") + " car moved to position " + Arrays.toString(currentCar.getPosition()) +
                     " with " + currentCar.getFuel() + " fuel left.");
             updateFuelLabels();

@@ -5,12 +5,13 @@ public class Logic {
     private Car blueCar;
     private Tile[][] grid;
     private boolean isRedTurn = true;
+    private int previousDieRoll = 0;
 
     public Logic(int gridSize) {
-        this.redCar = new Car(Color.RED, "Red", "R");
-        this.blueCar = new Car(Color.BLUE, "Blue", "B");
+        this.redCar = new Car(Color.RED, "Red", "🏎️");
+        this.blueCar = new Car(Color.BLUE, "Blue", "🚎");
 
-        // Set different initial positions for the cars
+        // Sets the initial positions for the cars
         this.redCar.setPosition(gridSize - 1, 0);
         this.blueCar.setPosition(gridSize - 1,0);
 
@@ -39,26 +40,49 @@ public class Logic {
         return grid[row][col];
     }
 
+    public int rollDice(){
+        int rollValue = (int)(Math.random() * 6) + 1;
+        System.out.println("Dice roll: " + rollValue);
+        this.previousDieRoll = rollValue;
+
+        return rollValue;
+    }
+
     public void playTurn() {
         Car currentCar = isRedTurn ? redCar : blueCar;
-        currentCar.executeTurn(currentCar);
+        if(currentCar.hasFuel()){
+            if(currentCar.isFrozen()){
+                currentCar.decrementFreeze();
+                isRedTurn = !isRedTurn;
+                return;
+            }else{
+                int diceRoll = rollDice();
+                executeTurn(currentCar,diceRoll);
+            }
+        }
+        
         isRedTurn = !isRedTurn;
     }
 
-    public void playTurn(Car car) {
-        car.updatePosition(grid.length);
-        Tile currentTile = grid[car.getPosition()[0]][car.getPosition()[1]];
-        if(currentTile.getTileType().equals("Black")) {
-            car.setPosition(grid.length - 1, 0);
-        } else if(currentTile.getTileType().equals("Green")){
-            int addFuel = (int)(car.getFuel() * 0.5);
-            car.setFuel(car.getFuel() + addFuel);
-        }else{
-            GreyTile greyTile = (GreyTile) currentTile;
-            int fuelCost = greyTile.getFuelCost();
-            System.out.println("Fuel cost: " + fuelCost);
-            System.out.println("New fuel: " + (car.getFuel() - fuelCost));
-            car.setFuel(car.getFuel() - fuelCost);
+    public void executeTurn(Car car,int dieRoll) {
+        for(int i = 0;i < dieRoll; i++){
+            System.out.println("Ran for loop #" + i+1);
+            car.updatePosition(grid.length);
+            Tile currentTile = grid[car.getPosition()[0]][car.getPosition()[1]];
+            if(i == dieRoll - 1){
+                if(currentTile.getTileType().equals("Black")) {
+                car.setPosition(grid.length - 1, 0);
+                }else if(currentTile.getTileType().equals("Green")){
+                    int addFuel = (int)(car.getFuel() * 0.5);
+                    car.setFuel(car.getFuel() + addFuel);
+                }
+            }else{
+                if(currentTile.getTileType().equals("Grey")){
+                    GreyTile greyTile = (GreyTile) currentTile;
+                    int fuelCost = greyTile.getFuelCost();
+                    car.setFuel(car.getFuel() - fuelCost);
+                }
+            }
         }
     }
 }
