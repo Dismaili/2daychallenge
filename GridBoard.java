@@ -8,12 +8,12 @@ public class GridBoard {
         createBoard(size);
     }
 
-    private void createBoard(int size) {
-        // Define constants for the board dimensions and colors
+    private void createBoard(int size) {//TODO set this to a percentage please :D
+        
         final int BLACK_TILES = 4;
         final int GREEN_TILES = 4;
-
-        // Create a board filled with grey tiles
+        // creates the number of black and green tiles which are a total of 30%, 15% are green and the other 15% are black.
+        // Create a simple board of only grey tiles so its all with a random 1-3 value.
         Tile[][] board = new Tile[size][size];
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -25,7 +25,7 @@ public class GridBoard {
         int blackTilesPlaced = 0;
         int greenTilesPlaced = 0;
 
-        // Place black tiles randomly
+        // Places 15% of the board to have black tiles in every row and every col.
         while (blackTilesPlaced < BLACK_TILES) {
             int row = random.nextInt(size);
             int col = random.nextInt(size);
@@ -37,7 +37,7 @@ public class GridBoard {
             }
         }
 
-        // Place green tiles randomly
+        // Places green tiles randomly to a sum of it being 15% of all tiles on the board.
         while (greenTilesPlaced < GREEN_TILES) {
             int row = random.nextInt(size);
             int col = random.nextInt(size);
@@ -52,7 +52,6 @@ public class GridBoard {
         this.grid = board;
     }
 
-    // Optionally, add a getter for the grid if needed
     public Tile[][] getGrid() {
         return grid;
     }
