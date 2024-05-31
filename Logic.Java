@@ -1,4 +1,5 @@
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 public class Logic {
     private Car redCar;
@@ -85,4 +86,26 @@ public class Logic {
             }
         }
     }
+    
+
+
+
+       
+        private void solutionOutOfFuel(Car car) {
+           
+            Object[] options = {"Return to Starting position", "Lose dise rolls  in the game"};
+            int choice = JOptionPane.showOptionDialog(null, "Out of Fuel! Choose one of these two options :",
+                    "Out of Fuel", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+              
+            if (choice == 0) {
+                car.setPosition(grid.lenght-1,0);        
+                car.setFuel(random.nextInt(120) + 1);    
+            } 
+            else {
+                int freezeCounter = Integer.parseInt(JOptionPane.showInputDialog("Enter number of turns to lose (1-6):"));    
+                car.setFreezeCounter(freezeCounter);                                                                                
+                car.setFuel(car.getFuel() + freezeCounter * 20);                                                              
+            }
+        }
+
 }
