@@ -34,11 +34,13 @@ public class Logic {
         );
     }
 
+    //initializes the grid 
     private void initializeGrid(int gridSize) {
         GridBoard board = new GridBoard(gridSize);
         this.grid = board.getGrid();
     }
 
+    //returns the red car
     public Car getRedCar() {    
         return redCar;
     }

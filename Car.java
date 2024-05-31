@@ -83,8 +83,18 @@ public class Car {
         this.position[1] = col;
     }// update the postion of the car in the 2d array.
 
+    // This method checks if the car should go left or right on the screen depending on the row it is on
+    private boolean goLeft(int gridSize){
+        if (this.position[0] == 0) {
+            return true;
+        }
+        return (gridSize % 2 == 0) 
+                ? ((this.position[0] % 2 == 0) && (this.position[0] != gridSize - 1))
+                : (this.position[0] % 2 != 0);
+    }
+
     public void updatePosition(int gridSize) {
-        boolean goLeft = (this.position[0] == 0) || (this.position[0] % 2 != 0);
+        boolean goLeft = goLeft(gridSize);// checks if the car should go left or right on the screen.
         System.out.println("goLeft: " + goLeft);
         System.out.println("Position: " + this.position[0] + ", " + this.position[1]);
         if (goLeft) {

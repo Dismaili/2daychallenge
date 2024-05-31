@@ -10,8 +10,8 @@ public class GridBoard {
 
     private void createBoard(int size) {//TODO set this to a percentage please :D
         
-        final int BLACK_TILES = 4;
-        final int GREEN_TILES = 4;
+        final int BLACK_TILES = (int)(size * size * 0.0);
+        final int GREEN_TILES = (int)(size * size * 0.15);
         // creates the number of black and green tiles which are a total of 30%, 15% are green and the other 15% are black.
         // Create a simple board of only grey tiles so its all with a random 1-3 value.
         Tile[][] board = new Tile[size][size];
