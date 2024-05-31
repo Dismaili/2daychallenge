@@ -176,10 +176,5 @@ public class GameGUI extends JFrame {//all the need componenets of the game
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GameGUI gui = new GameGUI(10);
-            gui.setVisible(true);
-        });
-    }
+  
 }
