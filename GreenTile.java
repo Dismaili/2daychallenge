@@ -1,10 +1,7 @@
-public class GreenTile extends Tiles {
-  public GreenTile() {
-      super("Green");
-  }
+public class GreenTile implements Tile{
 
-  @Override
-  public String getTileType() {
-      return "Green";
-  }
+    @Override
+    public String getTileType() {
+        return "Green";
+    }
 }

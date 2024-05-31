@@ -1,10 +1,7 @@
-public class BlackTile extends Tiles {
-  public BlackTile() {
-      super("Black");
-  }
+public class BlackTile implements Tile{
 
-  @Override
-  public String getTileType() {
-      return "Black";
-  }
+    @Override
+    public String getTileType() {
+        return "Black";
+    }
 }

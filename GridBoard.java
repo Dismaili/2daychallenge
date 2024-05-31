@@ -2,16 +2,21 @@ import java.util.Random;
 
 public class GridBoard {
 
-    public static void main(String[] args) {
+    private Tile[][] grid;
+
+    public GridBoard(int size) {
+        createBoard(size);
+    }
+
+    private void createBoard(int size) {
         // Define constants for the board dimensions and colors
-        final int SIZE = 10;
         final int BLACK_TILES = 4;
         final int GREEN_TILES = 4;
 
         // Create a board filled with grey tiles
-        Tiles[][] board = new Tiles[SIZE][SIZE];
-        for (int row = 0; row < SIZE; row++) {
-            for (int col = 0; col < SIZE; col++) {
+        Tile[][] board = new Tile[size][size];
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
                 board[row][col] = new GreyTile();
             }
         }
@@ -22,9 +27,9 @@ public class GridBoard {
 
         // Place black tiles randomly
         while (blackTilesPlaced < BLACK_TILES) {
-            int row = random.nextInt(SIZE);
-            int col = random.nextInt(SIZE);
-            if (board[row][col].getColor().equals("Grey")) {
+            int row = random.nextInt(size);
+            int col = random.nextInt(size);
+            if (board[row][col].getTileType().equals("Grey")) {
                 board[row][col] = new BlackTile();
                 blackTilesPlaced++;
             }
@@ -32,20 +37,19 @@ public class GridBoard {
 
         // Place green tiles randomly
         while (greenTilesPlaced < GREEN_TILES) {
-            int row = random.nextInt(SIZE);
-            int col = random.nextInt(SIZE);
-            if (board[row][col].getColor().equals("Grey")) {
+            int row = random.nextInt(size);
+            int col = random.nextInt(size);
+            if (board[row][col].getTileType().equals("Grey")) {
                 board[row][col] = new GreenTile();
                 greenTilesPlaced++;
             }
         }
 
-        // Print the board
-        for (int row = 0; row < SIZE; row++) {
-            for (int col = 0; col < SIZE; col++) {
-                System.out.print(board[row][col].getColor() + "\t");
-            }
-            System.out.println();
-        }
+        this.grid = board;
+    }
+
+    // Optionally, add a getter for the grid if needed
+    public Tile[][] getGrid() {
+        return grid;
     }
 }
