@@ -20,7 +20,7 @@ public class GameGUI extends JFrame {
 
     private void initializeComponents() {
         setTitle("Racing Game");
-        setSize(600, 600);
+        setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -52,8 +52,17 @@ public class GameGUI extends JFrame {
                 gridLabels[i][j] = new JLabel();
                 gridLabels[i][j].setOpaque(true);
                 gridLabels[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                gridLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
                 Tile tile = game.getTileAt(i, j);
-                switch (tile.getTileType()) {
+                if(i == game.getGridSize() - 1 && j == 0){
+                    gridLabels[i][j].setText("🚩");
+                    gridLabels[i][j].setBackground(Color.WHITE);
+                }
+                else if(i == 0 && j == 0){
+                    gridLabels[i][j].setText("🏁");
+                    gridLabels[i][j].setBackground(Color.WHITE);
+                }else{
+                    switch (tile.getTileType()) {
                     case "Grey":
                         gridLabels[i][j].setBackground(Color.LIGHT_GRAY);
                         GreyTile greyTile = (GreyTile) tile;
@@ -67,6 +76,7 @@ public class GameGUI extends JFrame {
                         gridLabels[i][j].setBackground(Color.GREEN);
                         gridLabels[i][j].setText("G");
                         break;
+                }
                 }
                 gridPanel.add(gridLabels[i][j]);
             }
@@ -103,16 +113,30 @@ public class GameGUI extends JFrame {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 Tile tile = game.getTileAt(i, j);
-                switch (tile.getTileType()) {
+                gridLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+                if(i == game.getGridSize() - 1 && j == 0){
+                    gridLabels[i][j].setText("🚩");
+                    gridLabels[i][j].setBackground(Color.WHITE);
+                }
+                else if(i == 0 && j == 0){
+                    gridLabels[i][j].setText("🏁");
+                    gridLabels[i][j].setBackground(Color.WHITE);
+                }else{
+                    switch (tile.getTileType()) {
                     case "Grey":
-                        gridLabels[i][j].setText(String.valueOf(((GreyTile) tile).getFuelCost()));
+                        gridLabels[i][j].setBackground(Color.LIGHT_GRAY);
+                        GreyTile greyTile = (GreyTile) tile;
+                        gridLabels[i][j].setText(String.valueOf(greyTile.getFuelCost()));
                         break;
                     case "Black":
+                        gridLabels[i][j].setBackground(Color.BLACK);
                         gridLabels[i][j].setText("B");
                         break;
                     case "Green":
+                        gridLabels[i][j].setBackground(Color.GREEN);
                         gridLabels[i][j].setText("G");
                         break;
+                }
                 }
                 gridLabels[i][j].setOpaque(true);
                 gridLabels[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -147,7 +171,8 @@ public class GameGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Car currentCar = isRedTurn ? game.getRedCar() : game.getBlueCar();
-            game.playTurn();  // Update this line to reflect your game's turn logic
+            game.playTurn();
+            updateGameLog("Player " + currentCar.getName() + " rolled a " + game.getPreviousDieRoll());
             updateGameLog((isRedTurn ? "Red" : "Blue") + " car moved to position " + Arrays.toString(currentCar.getPosition()) +
                     " with " + currentCar.getFuel() + " fuel left.");
             updateFuelLabels();

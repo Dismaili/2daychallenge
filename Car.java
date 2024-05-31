@@ -49,6 +49,10 @@ public class Car {
         return name;
     }
 
+    public int getFreezeCounter(){
+        return freezeCounter;
+    }
+
     public boolean isFrozen(){
         return freezeCounter > 0;
     }
