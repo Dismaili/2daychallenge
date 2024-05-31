@@ -6,6 +6,7 @@ public class Car {
     private String symbol;
     private int[] position;
     private int fuel;
+    private int freezeCounter = 0;
 
     public Car(Color color, String name, String symbol) {
         this.color = color;
@@ -40,8 +41,8 @@ public class Car {
         if(fuel < 0){
             this.fuel = 0;
         }
-        else if(fuel > 120){
-            this.fuel = 120;
+        else if(fuel > 240){
+            this.fuel = 240;
         }else{
             this.fuel = fuel;
         }
@@ -50,7 +51,6 @@ public class Car {
     public void move(int row, int col) {
         this.position[0] = row;
         this.position[1] = col;
-        this.fuel -= 10; // Example fuel reduction
     }
 
     public void updatePosition(int gridSize) {
@@ -60,7 +60,6 @@ public class Car {
         } else {
             moveRight(gridSize);
         }
-        this.fuel -= 10; // Reduce fuel on move
     }
 
     private void moveLeft(int gridSize) {

@@ -29,9 +29,11 @@ public class GridBoard {
         while (blackTilesPlaced < BLACK_TILES) {
             int row = random.nextInt(size);
             int col = random.nextInt(size);
-            if (board[row][col].getTileType().equals("Grey")) {
-                board[row][col] = new BlackTile();
-                blackTilesPlaced++;
+            if((row != 0 && col != 0) && (row != size-1 && col != 0)){
+                if (board[row][col].getTileType().equals("Grey")) {
+                    board[row][col] = new BlackTile();
+                    blackTilesPlaced++;
+                }
             }
         }
 
@@ -39,9 +41,11 @@ public class GridBoard {
         while (greenTilesPlaced < GREEN_TILES) {
             int row = random.nextInt(size);
             int col = random.nextInt(size);
-            if (board[row][col].getTileType().equals("Grey")) {
-                board[row][col] = new GreenTile();
-                greenTilesPlaced++;
+            if((row != 0 && col != 0) && (row != size-1 && col != 0)){
+                if (board[row][col].getTileType().equals("Grey")) {
+                    board[row][col] = new GreenTile();
+                    greenTilesPlaced++;
+                }
             }
         }
 

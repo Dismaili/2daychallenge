@@ -4,6 +4,7 @@ public class Logic {
     private Car redCar;
     private Car blueCar;
     private Tile[][] grid;
+    private boolean isRedTurn = true;
 
     public Logic(int gridSize) {
         this.redCar = new Car(Color.RED, "Red", "R");
@@ -11,7 +12,7 @@ public class Logic {
 
         // Set different initial positions for the cars
         this.redCar.setPosition(gridSize - 1, 0);
-        this.blueCar.setPosition(gridSize - 1, 1);
+        this.blueCar.setPosition(gridSize - 1,0);
 
         this.grid = new Tile[gridSize][gridSize];
         initializeGrid(gridSize);
@@ -22,7 +23,7 @@ public class Logic {
         this.grid = board.getGrid();
     }
 
-    public Car getRedCar() {
+    public Car getRedCar() {    
         return redCar;
     }
 
@@ -36,6 +37,12 @@ public class Logic {
 
     public Tile getTileAt(int row, int col) {
         return grid[row][col];
+    }
+
+    public void playTurn() {
+        Car currentCar = isRedTurn ? redCar : blueCar;
+        currentCar.executeTurn(currentCar);
+        isRedTurn = !isRedTurn;
     }
 
     public void playTurn(Car car) {
