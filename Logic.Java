@@ -13,14 +13,15 @@ public class Logic {
         this.redCar = new Car(Color.RED, "Red", "🏎️");
         this.blueCar = new Car(Color.BLUE, "Blue", "🚎");
 
-        // Sets the initial positions for the cars
+        // sets the initial positions for the cars
         this.redCar.setPosition(gridSize - 1, 0);
         this.blueCar.setPosition(gridSize - 1,0);
 
+        // initializes the grid
         this.grid = new Tile[gridSize][gridSize];
         initializeGrid(gridSize);
 
-
+        //shows insturcitosn on starts
         JOptionPane.showMessageDialog(
                         null,
                         "Welcome to The Racing Game! The objective of the game is to reach the top left corner of the grid.\n"
@@ -82,7 +83,7 @@ public class Logic {
                 executeTurn(currentCar,diceRoll);
             }
         }else{
-            solutionOutOfFuel(currentCar);
+            onCarRunsOutOfFuel(currentCar);
             isRedTurn = !isRedTurn;
             return;
         }
@@ -93,7 +94,7 @@ public class Logic {
     public void executeTurn(Car car,int dieRoll) {
         for(int i = 0;i < dieRoll; i++){
             if(!car.hasFuel()){
-                solutionOutOfFuel(car);
+                onCarRunsOutOfFuel(car);
                 return;
             }
             System.out.println("Ran for loop #" + i+1);
@@ -126,7 +127,7 @@ public class Logic {
     }
     
        
-    private void solutionOutOfFuel(Car car) {
+    private void onCarRunsOutOfFuel(Car car) {
         
         Object[] buttons = {"Reset to start", "Lose dise rolls  in the game"};
         int selection = JOptionPane.showOptionDialog(
