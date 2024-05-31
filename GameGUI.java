@@ -4,21 +4,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
-public class GameGUI extends JFrame {
-    private Logic game;
-    private JTextArea gameLog;
+public class GameGUI extends JFrame {//all the need componenets of the game
+    private Logic game;//the logic of how the game functions
+    private JTextArea gameLog;//component for loging the numbers of the car
     private JButton rollButton;
-    private JLabel redCarFuel;
-    private JLabel blueCarFuel;
-    private JPanel gridPanel;
-    private JLabel[][] gridLabels;
+    private JLabel redCarFuel;// fuel fo the red car
+    private JLabel blueCarFuel;//fuel of the blue car
+    private JPanel gridPanel;//the squares which where the squares land basically the outer outline.
+    private JLabel[][] gridLabels;// the inside of the  squares
 
     public GameGUI(int gridSize) {
         this.game = new Logic(gridSize);
         initializeComponents();
     }
 
-    private void initializeComponents() {
+    private void initializeComponents() { //sets the setting of the entire systme, basically the name,size,how the inputs effect the window.
         setTitle("Racing Game");
         setSize(1920, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,29 +40,29 @@ public class GameGUI extends JFrame {
 
         blueCarFuel = new JLabel("Blue Car Fuel: " + game.getBlueCar().getFuel());
         controlPanel.add(blueCarFuel);
-
+       
         add(controlPanel, BorderLayout.SOUTH);
 
-        gridPanel = new JPanel();
+        gridPanel = new JPanel();//creats the window that the game is shown in.
         gridPanel.setLayout(new GridLayout(game.getGridSize(), game.getGridSize()));
         gridLabels = new JLabel[game.getGridSize()][game.getGridSize()];
-
+            //populates the window with grid shaped squares which all contain a color and text. The outline and inline.
         for (int i = 0; i < game.getGridSize(); i++) {
             for (int j = 0; j < game.getGridSize(); j++) {
                 gridLabels[i][j] = new JLabel();
-                gridLabels[i][j].setOpaque(true);
-                gridLabels[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                gridLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-                Tile tile = game.getTileAt(i, j);
-                if(i == game.getGridSize() - 1 && j == 0){
+                gridLabels[i][j].setOpaque(true);//makes the background of the square visiable. 
+                gridLabels[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));//add a black border to each square.
+                gridLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);//centres the text in the boxes.
+                Tile tile = game.getTileAt(i, j);//gets tile insnance at that position, gray cell, black cell.
+                if(i == game.getGridSize() - 1 && j == 0){//if its the first square then it has a white color and a flag to signife the start.
                     gridLabels[i][j].setText("🚩");
                     gridLabels[i][j].setBackground(Color.WHITE);
                 }
                 else if(i == 0 && j == 0){
-                    gridLabels[i][j].setText("🏁");
+                    gridLabels[i][j].setText("🏁");// this is the end color its white and has a finish flag.
                     gridLabels[i][j].setBackground(Color.WHITE);
                 }else{
-                    switch (tile.getTileType()) {
+                    switch (tile.getTileType()) {//switches the properties of the tile depending on the color.
                     case "Grey":
                         gridLabels[i][j].setBackground(Color.LIGHT_GRAY);
                         GreyTile greyTile = (GreyTile) tile;
@@ -82,7 +82,7 @@ public class GameGUI extends JFrame {
             }
         }
 
-        add(gridPanel, BorderLayout.CENTER);
+        add(gridPanel, BorderLayout.CENTER);//  centers everythhing and puts together everything so its clean.
 
         updateGameLog("Welcome to the Racing Game!");
         updateGrid();
@@ -95,9 +95,9 @@ public class GameGUI extends JFrame {
     private void updateFuelLabels() {
         redCarFuel.setText("Red Car Fuel: " + game.getRedCar().getFuel());
         blueCarFuel.setText("Blue Car Fuel: " + game.getBlueCar().getFuel());
-    }
+    }//updates fuel labels and changes the visible fuel amount after each turn.
 
-    private void updateGrid() {
+    private void updateGrid() {//changes the postions of the cars in the grid.
         int[] redPos = game.getRedCar().getPosition();
         int[] bluePos = game.getBlueCar().getPosition();
         int gridSize = game.getGridSize();
@@ -109,7 +109,7 @@ public class GameGUI extends JFrame {
             }
         }
 
-        // Update grid with both car positions and tile details
+
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 Tile tile = game.getTileAt(i, j);
@@ -143,16 +143,13 @@ public class GameGUI extends JFrame {
             }
         }
 
-        // Update positions of red and blue cars
         if (redPos[0] >= 0 && redPos[0] < gridSize && redPos[1] >= 0 && redPos[1] < gridSize) {
             if (gridLabels[redPos[0]][redPos[1]].getText().isEmpty()) {
                 gridLabels[redPos[0]][redPos[1]].setText(game.getRedCar().getSymbol());
             } else {
                 gridLabels[redPos[0]][redPos[1]].setText(gridLabels[redPos[0]][redPos[1]].getText() + game.getRedCar().getSymbol());
             }
-        } else {
-            System.out.println("Error: Red car position out of bounds!");
-        }
+        } 
 
         if (bluePos[0] >= 0 && bluePos[0] < gridSize && bluePos[1] >= 0 && bluePos[1] < gridSize) {
             if (gridLabels[bluePos[0]][bluePos[1]].getText().isEmpty()) {
@@ -160,16 +157,14 @@ public class GameGUI extends JFrame {
             } else {
                 gridLabels[bluePos[0]][bluePos[1]].setText(gridLabels[bluePos[0]][bluePos[1]].getText() + game.getBlueCar().getSymbol());
             }
-        } else {
-            System.out.println("Error: Blue car position out of bounds!");
-        }
+        } 
     }
 
     private class RollButtonListener implements ActionListener {
         private boolean isRedTurn = true;
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {// this is the player turn such as moving the player,dice turn and updates the log at side of the screen.
             Car currentCar = isRedTurn ? game.getRedCar() : game.getBlueCar();
             game.playTurn();
             updateGameLog("Player " + currentCar.getName() + " rolled a " + game.getPreviousDieRoll());
